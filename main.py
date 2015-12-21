@@ -96,12 +96,12 @@ class WebhookHandler(webapp2.RequestHandler):
         temperatura_minima = response.get('previsoes')[0].get('temperatura_min')
         previsao = response.get('previsoes')[0].get('descricao')
 
-        msg = 'Bom dia Bully! A maxima hoje sera {} graus e a minima de {} graus com {}'.format(temperatura_maxima, temperatura_minima, previsao)
+        msg = "Bom dia Bully! A máxima hoje será de {} graus e a mínima de {} graus com {} \n".format(temperatura_maxima, temperatura_minima, previsao)
         if temperatura > 30:
-            reply('Hoje esta quente pra caramba! {} graus. Sorte que sou um robo.'.format(temperatura))
+            msg += 'Hoje está quente pra caramba! {} graus. Sorte que sou um robo.'.format(temperatura)
         else:
-            reply('Hoje esta agradavel: {} graus'.format(temperatura))
-            reply(msg)
+            msg += 'Hoje está agradável: {} graus'.format(temperatura)
+        return msg
 
     def lmgtfy(self):
         pass
@@ -124,7 +124,6 @@ class WebhookHandler(webapp2.RequestHandler):
         output = StringIO.StringIO()
         img.save(output, 'JPEG')
         return output.getvalue()
-
 
     def post(self):
         urlfetch.set_default_fetch_deadline(60)
@@ -180,7 +179,7 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/euro':
                 reply('TODO not done yet')
             elif text == '/bomdia':
-                self.bomdia()
+                reply(self.bomdia())
             elif text == '/lmgtfy':
                 reply(self.lmgtfy)
             elif text == '/sex':
