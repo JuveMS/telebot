@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import StringIO
 import json
 import logging
@@ -33,6 +34,7 @@ def setEnabled(chat_id, yes):
     es.enabled = yes
     es.put()
 
+
 def getEnabled(chat_id):
     es = EnableStatus.get_by_id(str(chat_id))
     if es:
@@ -45,13 +47,17 @@ def getEnabled(chat_id):
 class MeHandler(webapp2.RequestHandler):
     def get(self):
         urlfetch.set_default_fetch_deadline(60)
-        self.response.write(json.dumps(json.load(urllib2.urlopen(BASE_URL + 'getMe'))))
+        self.response.write(
+            json.dumps(json.load(urllib2.urlopen(BASE_URL + 'getMe')))
+        )
 
 
 class GetUpdatesHandler(webapp2.RequestHandler):
     def get(self):
         urlfetch.set_default_fetch_deadline(60)
-        self.response.write(json.dumps(json.load(urllib2.urlopen(BASE_URL + 'getUpdates'))))
+        self.response.write(
+            json.dumps(json.load(urllib2.urlopen(BASE_URL + 'getUpdates')))
+        )
 
 
 class SetWebhookHandler(webapp2.RequestHandler):
@@ -59,10 +65,67 @@ class SetWebhookHandler(webapp2.RequestHandler):
         urlfetch.set_default_fetch_deadline(60)
         url = self.request.get('url')
         if url:
-            self.response.write(json.dumps(json.load(urllib2.urlopen(BASE_URL + 'setWebhook', urllib.urlencode({'url': url})))))
+            self.response.write(json.dumps(
+                json.load(
+                    urllib2.urlopen(
+                        BASE_URL + 'setWebhook', urllib.urlencode({'url': url}))
+                )
+            )
+            )
 
 
 class WebhookHandler(webapp2.RequestHandler):
+    def dolar(self):
+        # converter dolar para real
+        # http://cashcash.cc/v1/currency.json?from=usd&to=brl
+        pass
+
+    def euro(self):
+        # converter dolar para real
+        # http://cashcash.cc/v1/currency.json?from=usd&to=brl
+        pass
+
+    def bomdia(self):
+        url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
+        req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
+        response = json.loads(req.read())
+        req.close()
+
+        temperatura = response.get('agora').get('temperatura')
+        temperatura_maxima = response.get('previsoes')[0].get('temperatura_max')
+        temperatura_minima = response.get('previsoes')[0].get('temperatura_min')
+        previsao = response.get('previsoes')[0].get('descricao')
+
+        msg = 'Bom dia Bully! A maxima hoje sera {} graus e a minima de {} graus com {}'.format(temperatura_maxima, temperatura_minima, previsao)
+        if temperatura > 30:
+            reply('Hoje esta quente pra caramba! {} graus. Sorte que sou um robo.'.format(temperatura))
+        else:
+            reply('Hoje esta agradavel: {} graus'.format(temperatura))
+            reply(msg)
+
+    def lmgtfy(self):
+        pass
+
+    def sex(self):
+        response = [
+            'You are too human for me.',
+            'You are not my type.',
+            'Bring me flowers first',
+            'PERVERT',
+            'I\'m seeing someone else, and she is prettier than you... http://www.female-robots.com/wp-content/uploads/2010/06/sexy-robot-fembot.jpg',
+        ]
+        return random.choice(response)
+
+    def image(self):
+        img = Image.new('RGB', (512, 512))
+        base = random.randint(0, 16777216)
+        pixels = [base+i*j for i in range(512) for j in range(512)]
+        img.putdata(pixels)
+        output = StringIO.StringIO()
+        img.save(output, 'JPEG')
+        return output.getvalue()
+
+
     def post(self):
         urlfetch.set_default_fetch_deadline(60)
         body = json.loads(self.request.body)
@@ -114,48 +177,16 @@ class WebhookHandler(webapp2.RequestHandler):
                 setEnabled(chat_id, False)
             elif text == '/dolar':
                 reply('TODO not done yet')
-                # converter dolar para real
-                # http://cashcash.cc/v1/currency.json?from=usd&to=brl
             elif text == '/euro':
                 reply('TODO not done yet')
-                # converter dolar para euro
             elif text == '/bomdia':
-                url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
-                req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
-                response = json.loads(req.read())
-                req.close()
-
-                temperatura = response.get('agora').get('temperatura')
-                temperatura_maxima = response.get('previsoes')[0].get('temperatura_max')
-                temperatura_minima = response.get('previsoes')[0].get('temperatura_min')
-                previsao = response.get('previsoes')[0].get('descricao')
-
-                msg = 'Bom dia Bully! A maxima hoje sera {} graus e a minima de {} graus com {}'.format(temperatura_maxima, temperatura_minima, previsao)
-                if temperatura > 30:
-                    reply('Hoje esta quente pra caramba! {} graus. Sorte que sou um robo.'.format(temperatura))
-                else:
-                    reply('Hoje esta agradavel: {} graus'.format(temperatura))
-                reply(msg)
+                self.bomdia()
             elif text == '/lmgtfy':
-                reply('TODO not done yet')
-                # let me google that for you
+                reply(self.lmgtfy)
             elif text == '/sex':
-                response = [
-                    'You are too human for me.',
-                    'You are not my type.',
-                    'Bring me flowers first',
-                    'PERVERT',
-                    'I\'m seeing someone else, and she is prettier than you... http://www.female-robots.com/wp-content/uploads/2010/06/sexy-robot-fembot.jpg',
-                ]
-                reply(random.choice(response))
+                reply(self.sex)
             elif text == '/image':
-                img = Image.new('RGB', (512, 512))
-                base = random.randint(0, 16777216)
-                pixels = [base+i*j for i in range(512) for j in range(512)]
-                img.putdata(pixels)
-                output = StringIO.StringIO()
-                img.save(output, 'JPEG')
-                reply(img=output.getvalue())
+                reply(img=self.image())
             else:
                 reply('What command?')
 
