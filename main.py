@@ -116,6 +116,17 @@ class WebhookHandler(webapp2.RequestHandler):
         ]
         return random.choice(response)
 
+    def lotr(self):
+        response = [
+            'I\'t still only counts as one!',
+            'Certainty of death, small chance of success- what are we waiting for?',
+            'A wizard is never late, Frodo Baggins. Nor is he early. He arrives precisely when he means to',
+            'You could have picked a better spot',
+            'What about second breakfast?',
+            'YOU SHALL NOT PASS!'
+        ]
+        return random.choice(response)
+
     def image(self):
         img = Image.new('RGB', (512, 512))
         base = random.randint(0, 16777216)
@@ -124,6 +135,12 @@ class WebhookHandler(webapp2.RequestHandler):
         output = StringIO.StringIO()
         img.save(output, 'JPEG')
         return output.getvalue()
+
+    def elingrid(self):
+        return "Elingrid é o melhor ship".decode('utf-8')
+
+    def carlisa(self):
+        return "Elingrid <3".decode('utf-8')
 
     def post(self):
         urlfetch.set_default_fetch_deadline(60)
@@ -190,6 +207,12 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('What command?')
 
         # CUSTOMIZE FROM HERE
+        elif 'elingrid' in text or 'Elingrid' in text:
+            reply(self.elingrid())
+        elif 'carlisa' in text or 'Carlisa' in text:
+            reply(self.carlisa())
+        elif 'lotr' in text or 'LotR' in text or 'Gandalf' in text:
+            reply(self.lotr())
         elif 'image me' in text:
             reply('TODO')
             # google search images
@@ -215,23 +238,6 @@ class WebhookHandler(webapp2.RequestHandler):
                 'ADVENTURE TIME'
             ]
             reply(random.choice(response))
-        else:
-            if getEnabled(chat_id):
-                try:
-                    resp1 = json.load(urllib2.urlopen('http://www.simsimi.com/requestChat?lc=en&ft=1.0&req=' + urllib.quote_plus(text.encode('utf-8'))))
-                    back = resp1.get('res').get('msg')
-                except urllib2.HTTPError, err:
-                    logging.error(err)
-                    # back = str(err)
-                    back = 'I dont know what you mean'
-                if not back:
-                    reply('okay...')
-                elif 'I HAVE NO RESPONSE' in back:
-                    reply('you said something with no meaning')
-                else:
-                    reply(back)
-            else:
-                logging.info('not enabled for chat_id {}'.format(chat_id))
 
 
 app = webapp2.WSGIApplication([
