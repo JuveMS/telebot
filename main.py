@@ -14,7 +14,7 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 import webapp2
 
-TOKEN = 'YOUR_BOT_TOKEN_HERE'
+TOKEN = '168191309:AAEdER88qh8Q34Hdt-yUZSBNhiU_mMfMUOw'
 
 BASE_URL = 'https://api.telegram.org/bot' + TOKEN + '/'
 
@@ -112,6 +112,8 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/stop':
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
+            elif text == '/sex':
+                reply('You\'re not my type')
             elif text == '/image':
                 img = Image.new('RGB', (512, 512))
                 base = random.randint(0, 16777216)
@@ -126,7 +128,7 @@ class WebhookHandler(webapp2.RequestHandler):
         # CUSTOMIZE FROM HERE
 
         elif 'who are you' in text:
-            reply('telebot starter kit, created by yukuku: https://github.com/yukuku/telebot')
+            reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
         elif 'what time' in text:
             reply('look at the top-right corner of your screen!')
         else:
@@ -136,7 +138,8 @@ class WebhookHandler(webapp2.RequestHandler):
                     back = resp1.get('res').get('msg')
                 except urllib2.HTTPError, err:
                     logging.error(err)
-                    back = str(err)
+                    # back = str(err)
+                    back = 'I dont know what you mean'
                 if not back:
                     reply('okay...')
                 elif 'I HAVE NO RESPONSE' in back:
