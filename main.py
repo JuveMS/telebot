@@ -113,7 +113,7 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
             elif text == '/sex':
-                choice = [
+                response = [
                     'You are too human for me.',
                     'You are not my type.',
                     'Bring me flowers first',
