@@ -130,7 +130,11 @@ class WebhookHandler(webapp2.RequestHandler):
         elif 'who are you' in text:
             reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
         elif 'what time' in text:
-            reply('look at the top-right corner of your screen!')
+            response = [
+                'look at the top-right corner of your screen!',
+                'ADVENTURE TIME'
+            ]
+            reply(random.choice(response))
         else:
             if getEnabled(chat_id):
                 try:
