@@ -129,6 +129,15 @@ class WebhookHandler(webapp2.RequestHandler):
 
         elif 'who are you' in text:
             reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
+        elif 'say something' in text:
+            response = [
+                'Freeze? I\'m a robot. I\'m not a refrigerator. ',
+                'Life? Don\'t talk to me about life! ',
+                'Incredible... it\'s even worse than I thought it would be.',
+                'Not that anyone cares what I say, but the restaurant is at the *other* end of the Universe.',
+                'Here I am, brain the size of a planet, and they ask me to take you to the bridge. Call that job satisfaction, \'cause I don\'t. ',
+            ]
+            reply(random.choice(response))
         elif 'what time' in text:
             response = [
                 'look at the top-right corner of your screen!',
