@@ -120,8 +120,22 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('TODO not done yet')
                 # converter dolar para euro
             elif text == '/bomdia':
-                reply('TODO not done yet')
-                # bom dia + previsao do tempo de forma engracada
+                url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
+                req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
+                response = json.loads(req.read())
+                req.close()
+
+                temperatura = response.get('agora').get('temperatura')
+                temperatura_maxima = response.get('previsoes')[0].get('temperatura_max')
+                temperatura_minima = response.get('previsoes')[0].get('temperatura_min')
+                previsao = response.get('previsoes')[0].get('descricao')
+
+                msg = 'Bom dia Bully! A maxima hoje sera {} graus e a minima de {} graus com {}'.format(temperatura_maxima, temperatura_minima, previsao)
+                if temperatura > 30:
+                    reply('Hoje esta quente pra caramba! {} graus. Sorte que sou um robo.'.format(temperatura))
+                else:
+                    reply('Hoje esta agradavel: {} graus'.format(temperatura))
+                reply(msg)
             elif text == '/lmgtfy':
                 reply('TODO not done yet')
                 # let me google that for you
@@ -137,7 +151,7 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/image':
                 img = Image.new('RGB', (512, 512))
                 base = random.randint(0, 16777216)
-                pixels = [base+i*j for i in range(512) for j in range(512)]  # generate sample image
+                pixels = [base+i*j for i in range(512) for j in range(512)]
                 img.putdata(pixels)
                 output = StringIO.StringIO()
                 img.save(output, 'JPEG')
@@ -149,6 +163,7 @@ class WebhookHandler(webapp2.RequestHandler):
         elif 'image me' in text:
             reply('TODO')
             # google search images
+            # https://developers.google.com/custom-search/json-api/v1/overview
         elif 'boa noite' in text:
             # todo acentuacao
             response = ['carneiros eletricos vou contar, doces sonhos vao se zarcar, como odeio a noite']
