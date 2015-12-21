@@ -127,9 +127,12 @@ class WebhookHandler(webapp2.RequestHandler):
 
         # CUSTOMIZE FROM HERE
 
+        elif 'boa noite' in text:
+            response = ['carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite']
+            reply(random.choice(response))
         elif 'who are you' in text:
             reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
-        elif 'say something' in text:
+        elif 'fala ai' in text or 'coe' in text or 'oii' in text:
             response = [
                 'Freeze? I\'m a robot. I\'m not a refrigerator. ',
                 'Life? Don\'t talk to me about life! ',
