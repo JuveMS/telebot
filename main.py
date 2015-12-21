@@ -112,6 +112,19 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/stop':
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
+            elif text == '/dolar':
+                reply('TODO not done yet')
+                # converter dolar para real
+                # http://cashcash.cc/v1/currency.json?from=usd&to=brl
+            elif text == '/euro':
+                reply('TODO not done yet')
+                # converter dolar para euro
+            elif text == '/bomdia':
+                reply('TODO not done yet')
+                # bom dia + previsao do tempo de forma engracada
+            elif text == '/lmgtfy':
+                reply('TODO not done yet')
+                # let me google that for you
             elif text == '/sex':
                 response = [
                     'You are too human for me.',
@@ -133,8 +146,11 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('What command?')
 
         # CUSTOMIZE FROM HERE
-
+        elif 'image me' in text:
+            reply('TODO')
+            # google search images
         elif 'boa noite' in text:
+            # todo acentuacao
             response = ['carneiros eletricos vou contar, doces sonhos vao se zarcar, como odeio a noite']
             reply(random.choice(response))
         elif 'who are you' in text:
