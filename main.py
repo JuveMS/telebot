@@ -97,11 +97,11 @@ class WebhookHandler(webapp2.RequestHandler):
         previsao = response.get('previsoes')[0].get('descricao')
 
         msg = "Bom dia Bully! A máxima hoje será de {} graus e a mínima de {} graus com {} \n".format(temperatura_maxima, temperatura_minima, previsao)
-        if temperatura > 30:
+        if int(temperatura) >= 28:
             msg += 'Hoje está quente pra caramba! {} graus. Sorte que sou um robo.'.format(temperatura)
         else:
             msg += 'Hoje está agradável: {} graus'.format(temperatura)
-        return msg
+        return msg.decode('utf-8')
 
     def lmgtfy(self):
         pass
