@@ -113,7 +113,14 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
             elif text == '/sex':
-                reply('You\'re not my type')
+                choice = [
+                    'You are too human for me.',
+                    'You are not my type.',
+                    'Bring me flowers first',
+                    'PERVERT',
+                    'I\'m seeing someone else, and she is prettier than you... http://www.female-robots.com/wp-content/uploads/2010/06/sexy-robot-fembot.jpg',
+                ]
+                reply(random.choice(response))
             elif text == '/image':
                 img = Image.new('RGB', (512, 512))
                 base = random.randint(0, 16777216)
