@@ -157,6 +157,17 @@ class WebhookHandler(webapp2.RequestHandler):
     def carlisa(self):
         return "Elingrid <3".decode('utf-8')
 
+    def nude(self):
+        nude_url = [
+            'http://www.naosalvo.com.br/wp-content/uploads/2015/03/nudesmanda'
+        ]
+        nude_number = random.randint(0,7)
+        url = nude_url + nude_number + '.jpg'
+        req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
+        response = req.read()
+        req.close()
+        return response
+
     def post(self):
         urlfetch.set_default_fetch_deadline(60)
         body = json.loads(self.request.body)
@@ -222,6 +233,8 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('What command?')
 
         # CUSTOMIZE FROM HERE
+        elif 'nude' in text:
+            reply(img=self.nude())
         elif 'elingrid' in text or 'Elingrid' in text:
             reply(self.elingrid())
         elif 'carlisa' in text or 'Carlisa' in text:
@@ -233,12 +246,11 @@ class WebhookHandler(webapp2.RequestHandler):
             # google search images
             # https://developers.google.com/custom-search/json-api/v1/overview
         elif 'boa noite' in text:
-            # todo acentuacao
             response = ['carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite']
             reply(random.choice(response))
         elif 'who are you' in text:
             reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
-        elif 'fala ai' in text or 'coe' in text or 'oii' in text:
+        elif 'fala ai' in text or 'coe' in text or 'oii' in text or 'guia' in text or 'Guia' in text:
             response = [
                 'Freeze? I\'m a robot. I\'m not a refrigerator. ',
                 'Life? Don\'t talk to me about life! ',
