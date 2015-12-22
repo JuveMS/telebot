@@ -234,7 +234,7 @@ class WebhookHandler(webapp2.RequestHandler):
             # https://developers.google.com/custom-search/json-api/v1/overview
         elif 'boa noite' in text:
             # todo acentuacao
-            response = ['carneiros eletricos vou contar, doces sonhos vao se zarcar, como odeio a noite']
+            response = ['carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite']
             reply(random.choice(response))
         elif 'who are you' in text:
             reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
