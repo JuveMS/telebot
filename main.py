@@ -75,6 +75,7 @@ class SetWebhookHandler(webapp2.RequestHandler):
 
 
 class WebhookHandler(webapp2.RequestHandler):
+    '''
     def real2dolar(self, text):
         url = 'http://cashcash.cc/v1/currency.json?from=usd&to=brl'
         req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
@@ -94,7 +95,7 @@ class WebhookHandler(webapp2.RequestHandler):
         rate = response.get('rate')
         real = float(text.replace('/dolar2real', '').replace(',', '.').strip())
         return real * rate
-
+    '''
     def euro(self):
         # converter euro para real
         # http://cashcash.cc/v1/currency.json?from=usd&to=brl
@@ -158,11 +159,9 @@ class WebhookHandler(webapp2.RequestHandler):
         return "Elingrid <3".decode('utf-8')
 
     def nude(self):
-        nude_url = [
-            'http://www.naosalvo.com.br/wp-content/uploads/2015/03/nudesmanda'
-        ]
+        nude_url = 'http://www.naosalvo.com.br/wp-content/uploads/2015/03/nudesmanda'
         nude_number = random.randint(0,7)
-        url = nude_url + nude_number + '.jpg'
+        url = nude_url + str(nude_number) + '.jpg'
         req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
         response = req.read()
         req.close()
@@ -217,10 +216,6 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/stop':
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
-            elif text.startswith('/dolar2real'):
-                reply('Em dilmas isso vale: ' + str(self.dolar2real(text)))
-            elif text.startswith('/real2dolar'):
-                reply('Em obamas isso vale: ' + str(self.real2dolar(text)))
             elif text == '/bomdia':
                 reply(self.bomdia())
             elif text == '/lmgtfy':
