@@ -241,8 +241,8 @@ class WebhookHandler(webapp2.RequestHandler):
             # google search images
             # https://developers.google.com/custom-search/json-api/v1/overview
         elif 'boa noite' in text:
-            response = ['carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite']
-            reply(random.choice(response))
+            response = 'carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite'.decode('utf-8')
+            reply(response)
         elif 'who are you' in text:
             reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
         elif 'fala ai' in text or 'coe' in text or 'oii' in text or 'guia' in text or 'Guia' in text:
