@@ -101,11 +101,15 @@ class WebhookHandler(webapp2.RequestHandler):
         # http://cashcash.cc/v1/currency.json?from=usd&to=brl
         pass
 
-    def bomdia(self):
-        url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
+    def requestJson(url):
         req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
         response = json.loads(req.read())
         req.close()
+        return response
+        
+    def bomdia(self):
+        url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
+        response = requestJson(url)
 
         temperatura = response.get('agora').get('temperatura')
         temperatura_maxima = response.get('previsoes')[0].get('temperatura_max')
@@ -118,7 +122,19 @@ class WebhookHandler(webapp2.RequestHandler):
         else:
             msg += 'Hoje está agradável: {} graus'.format(temperatura)
         return msg.decode('utf-8')
-
+        
+    def gutenMorgen(self):
+        url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22geesthacht%2C%20deu%22)%20and%20u%3D'c'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys'
+        response = requestJson(url)
+        
+        temperatura = response.get('query').get('results').get('channel').get('item').get('condition').get('temp')
+        temperatura_maxima = response.get('query').get('results').get('channel').get('item').get('condition').get('forecast')[0].get('high')
+        temperatura_minima = response.get('query').get('results').get('channel').get('item').get('condition').get('forecast')[0].get('low')
+        previsao = temperatura = response.get('query').get('results').get('channel').get('item').get('condition').get('text')
+        
+        msg = "Guten Morgen Bully! Die maximale Temperatur ist {} Grad und die minimale Temperatur ist {} \n".format(temperatura_maxima, temperatura_minima)
+        return msg.decode('utf-8')
+        
     def lmgtfy(self):
         pass
 
@@ -218,6 +234,8 @@ class WebhookHandler(webapp2.RequestHandler):
                 setEnabled(chat_id, False)
             elif text == '/bomdia':
                 reply(self.bomdia())
+            elif text == '/gutenmorgen':
+                reply(self.gutenMorgen())
             elif text == '/lmgtfy':
                 reply(self.lmgtfy())
             elif text == '/sex':
