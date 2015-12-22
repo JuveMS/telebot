@@ -260,6 +260,9 @@ class WebhookHandler(webapp2.RequestHandler):
                 'ADVENTURE TIME'
             ]
             reply(random.choice(response))
+        elif 'GoT' in text or 'Game of Thrones' in text or 'game of thrones' in text:
+            response = 'You know nothing, Jon Snow'
+            reply(response)
 
 
 app = webapp2.WSGIApplication([
