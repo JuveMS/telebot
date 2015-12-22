@@ -127,10 +127,11 @@ class WebhookHandler(webapp2.RequestHandler):
         url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22geesthacht%2C%20deu%22)%20and%20u%3D'c'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
         response = self.requestJson(url)
 
+        temperatura = response.get('query').get('results').get('channel').get('item').get('condition').get('temp')
         temperatura_maxima = response.get('query').get('results').get('channel').get('item').get('forecast')[0].get('high')
         temperatura_minima = response.get('query').get('results').get('channel').get('item').get('forecast')[0].get('low')
 
-        msg = "Guten Morgen Bully! Die maximale Temperatur ist {} Grad und die minimale Temperatur ist {} \n".format(temperatura_maxima, temperatura_minima)
+        msg = "Guten Morgen Bully! Es ist {} Grad. Die maximale Temperatur ist {} Grad und die minimale Temperatur ist {} \n".format(temperatura, temperatura_maxima, temperatura_minima)
         return msg.decode('utf-8')
 
     def lmgtfy(self):
