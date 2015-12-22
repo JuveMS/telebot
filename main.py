@@ -75,13 +75,28 @@ class SetWebhookHandler(webapp2.RequestHandler):
 
 
 class WebhookHandler(webapp2.RequestHandler):
-    def dolar(self):
-        # converter dolar para real
-        # http://cashcash.cc/v1/currency.json?from=usd&to=brl
-        pass
+    def real2dolar(self, text):
+        url = 'http://cashcash.cc/v1/currency.json?from=usd&to=brl'
+        req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
+        response = json.loads(req.read())
+        req.close()
+
+        rate = response.get('rate')
+        real = float(text.replace('/real2dolar', '').replace(',', '.').strip())
+        return real / rate
+
+    def dolar2real(self, text):
+        url = 'http://cashcash.cc/v1/currency.json?from=usd&to=brl'
+        req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
+        response = json.loads(req.read())
+        req.close()
+
+        rate = response.get('rate')
+        real = float(text.replace('/dolar2real', '').replace(',', '.').strip())
+        return real * rate
 
     def euro(self):
-        # converter dolar para real
+        # converter euro para real
         # http://cashcash.cc/v1/currency.json?from=usd&to=brl
         pass
 
@@ -191,14 +206,14 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/stop':
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
-            elif text == '/dolar':
-                reply('TODO not done yet')
-            elif text == '/euro':
-                reply('TODO not done yet')
+            elif text.startswith('/dolar2real'):
+                reply('Em dilmas isso vale: ' + str(self.dolar2real(text)))
+            elif text.startswith('/real2dolar'):
+                reply('Em obamas isso vale: ' + str(self.real2dolar(text)))
             elif text == '/bomdia':
                 reply(self.bomdia())
             elif text == '/lmgtfy':
-                reply(self.lmgtfy)
+                reply(self.lmgtfy())
             elif text == '/sex':
                 reply(self.sex())
             elif text == '/image':
