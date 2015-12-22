@@ -200,7 +200,7 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/lmgtfy':
                 reply(self.lmgtfy)
             elif text == '/sex':
-                reply(self.sex)
+                reply(self.sex())
             elif text == '/image':
                 reply(img=self.image())
             else:
