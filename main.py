@@ -165,6 +165,23 @@ class WebhookHandler(webapp2.RequestHandler):
         ]
         return random.choice(response)
 
+    def alemanha(self):
+        response = [
+            'E fugiram pra Alemanha...',
+            'O Ayrton ja voltou de la?',
+            'Vamos?',
+            'Todo dia um 7x1 diferente...'
+        ]
+        return random.choice(response)
+ 
+    def starwars(self):
+        response = [
+            'When 900 years old, you reach... Look as good, you will not',
+            'Come to the bot side!',          
+            'IT\'S A TRAP!'        
+        ]
+        return random.choice(response)
+
     def image(self):
         img = Image.new('RGB', (512, 512))
         base = random.randint(0, 16777216)
@@ -262,6 +279,10 @@ class WebhookHandler(webapp2.RequestHandler):
             reply(self.carlisa())
         elif 'lotr' in text or 'LotR' in text or 'Gandalf' in text:
             reply(self.lotr())
+        elif 'alemanha' in text or 'Alemanha' in text:
+            reply(self.alemanha())
+        elif 'star wars' in text or 'Star Wars' in text or 'SW' in text:
+            reply(self.starwars())
         elif 'image me' in text:
             reply('TODO')
             # google search images
