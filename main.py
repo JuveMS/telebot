@@ -131,6 +131,13 @@ class WebhookHandler(webapp2.RequestHandler):
             'I\'m seeing someone else, and she is prettier than you... http://www.female-robots.com/wp-content/uploads/2010/06/sexy-robot-fembot.jpg',
         ]
         return random.choice(response)
+    def ingrid(self):
+        response = [
+            'Baderneira',
+            'Arruaceira',
+            'Agitadora'
+        ]
+        return random.choice(response)
 
     def lotr(self):
         response = [
@@ -222,6 +229,8 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply(self.lmgtfy())
             elif text == '/sex':
                 reply(self.sex())
+            elif text == '/ingrid':
+                reply(self.ingrid())
             elif text == '/image':
                 reply(img=self.image())
             else:
