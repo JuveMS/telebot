@@ -1,4 +1,10 @@
 import random
+import urllib2
+import json
+
+from PIL import Image
+import StringIO
+
 MESSAGES = {
     'sex': [
         'You are too human for me.',
@@ -62,3 +68,89 @@ MESSAGES = {
 
 def resposta(tipo):
     return {'msg': random.choice(MESSAGES.get(tipo))}
+
+
+def textSearch(text):
+    pass
+
+
+def bomdia():
+    url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
+    response = requestJson(url)
+
+    temperatura = response.get('agora').get('temperatura')
+    temperatura_maxima = response.get('previsoes')[0].get('temperatura_max')
+    temperatura_minima = response.get('previsoes')[0].get('temperatura_min')
+    previsao = response.get('previsoes')[0].get('descricao')
+
+    msg = "Bom dia Bully! A máxima hoje será de {} graus e a mínima de {} graus com {} \n".format(
+        temperatura_maxima, temperatura_minima, previsao)
+    if int(temperatura) >= 28:
+        msg += 'Hoje está quente pra caramba! {} graus. Sorte que sou um robo.'.format(
+            temperatura)
+    else:
+        msg += 'Hoje está agradável: {} graus'.format(temperatura)
+        return msg.decode('utf-8')
+
+
+def gutenMorgen():
+        url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22geesthacht%2C%20deu%22)%20and%20u%3D'c'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+        response = requestJson(url)
+
+        temperatura = response.get('query').get('results').get(
+            'channel').get('item').get('condition').get('temp')
+        temperatura_maxima = response.get('query').get('results').get(
+            'channel').get('item').get('forecast')[0].get('high')
+        temperatura_minima = response.get('query').get('results').get(
+            'channel').get('item').get('forecast')[0].get('low')
+
+        msg = "Guten Morgen Bully! Es ist {} Grad. Die maximale Temperatur ist {} Grad und die minimale Temperatur ist {} \n".format(
+            temperatura, temperatura_maxima, temperatura_minima)
+        return msg.decode('utf-8')
+
+
+def drawImage():
+    img = Image.new('RGB', (512, 512))
+    base = random.randint(0, 16777216)
+    pixels = [base+i*j for i in range(512) for j in range(512)]
+    img.putdata(pixels)
+    output = StringIO.StringIO()
+    img.save(output, 'JPEG')
+    return output.getvalue()
+
+
+def nude():
+    nude_url = 'http://www.naosalvo.com.br/wp-content/uploads/2015/03/nudesmanda'
+    nude_number = random.randint(0, 7)
+    url = nude_url + str(nude_number) + '.jpg'
+    return urlToImage(url)
+
+
+def romero():
+    response = [
+        'http://ak-hdl.buzzfed.com/static/2015-10/30/14/enhanced/webdr13/enhanced-15699-1446228181-1.jpg',
+        'http://cdn.playbuzz.com/cdn/01abb44f-88dc-4eab-8c10-ad2ac3a4f962/a9246bbb-6c58-4803-a361-c23a290e09d5.jpg',
+        'http://e-c5.sttc.net.br/uploads/RTEmagicC_12272697_10208101927404572_1485185519_n_01.jpg.jpg',
+        'http://imguol.com/c/entretenimento/2015/03/23/montagem-feita-por-fa-em-que-ines-brasil-aparece-como-pintura-de-romero-britto-1427142882485_640x640.jpg']
+    url = random.choice(response)
+    return urlToImage(url)
+
+
+def requestJson(url):
+    req = urllib2.urlopen(
+        urllib2.Request(
+            url, headers={
+                'Content-Type': 'application/json'}))
+    response = json.loads(req.read())
+    req.close()
+    return response
+
+
+def urlToImage(url):
+    req = urllib2.urlopen(
+        urllib2.Request(
+            url, headers={
+                'Content-Type': 'application/json'}))
+    response = req.read()
+    req.close()
+    return response
