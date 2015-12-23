@@ -19,6 +19,66 @@ TOKEN = '168191309:AAEdER88qh8Q34Hdt-yUZSBNhiU_mMfMUOw'
 
 BASE_URL = 'https://api.telegram.org/bot' + TOKEN + '/'
 
+MESSAGES = {
+    'sex': [
+        'You are too human for me.',
+        'You are not my type.',
+        'Bring me flowers first',
+        'PERVERT',
+        'I\'m seeing someone else, and she is prettier than you... http://www.female-robots.com/wp-content/uploads/2010/06/sexy-robot-fembot.jpg',
+    ],
+    'ingrid': [
+        'Baderneira',
+        'Arruaceira',
+        'Agitadora'
+    ],
+    'lotr': [
+        'I\'t still only counts as one!',
+        'Certainty of death, small chance of success- what are we waiting for?',
+        'A wizard is never late, Frodo Baggins. Nor is he early. He arrives precisely when he means to',
+        'You could have picked a better spot',
+        'What about second breakfast?',
+        'YOU SHALL NOT PASS!'
+    ],
+    'guia': [
+        'Freeze? I\'m a robot. I\'m not a refrigerator. ',
+        'Life? Don\'t talk to me about life! ',
+        'Incredible... it\'s even worse than I thought it would be.',
+        'Not that anyone cares what I say, but the restaurant is at the *other* end of the Universe.',
+        'Here I am, brain the size of a planet, and they ask me to take you to the bridge. Call that job satisfaction, \'cause I don\'t. ',
+    ],
+    'hora': [
+        'look at the top-right corner of your screen!',
+        'ADVENTURE TIME'
+    ],
+    'boanoite': [
+        'carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite'.decode('utf-8')
+    ],
+    'starwars': [
+        'When 900 years old, you reach... Look as good, you will not',
+        'Come to the bot side!',
+        'IT\'S A TRAP!'
+    ],
+    'alemanha': [
+        'E fugiram pra Alemanha...',
+        'O Ayrton ja voltou de la?',
+        'Vamos?',
+        'Todo dia um 7x1 diferente...'
+    ],
+    'got': [
+        'You know nothing, Jon Snow'
+    ],
+    'elingrid': [
+        "Elingrid é o melhor ship".decode('utf-8')
+    ],
+    'carlisa': [
+        "Elingrid <3".decode('utf-8')
+    ],
+    'lumateus': [
+        "Aaaa... Lá vão eles de novo pro bequinho.. ¬¬".decode('utf-8')
+    ],
+}
+
 
 def requestJson(url):
     req = urllib2.urlopen(
@@ -99,67 +159,6 @@ class SetWebhookHandler(webapp2.RequestHandler):
 
 class WebhookHandler(webapp2.RequestHandler):
 
-    def __init__(self):
-        self._messages = {
-            'sex': [
-                'You are too human for me.',
-                'You are not my type.',
-                'Bring me flowers first',
-                'PERVERT',
-                'I\'m seeing someone else, and she is prettier than you... http://www.female-robots.com/wp-content/uploads/2010/06/sexy-robot-fembot.jpg',
-            ],
-            'ingrid': [
-                'Baderneira',
-                'Arruaceira',
-                'Agitadora'
-            ],
-            'lotr': [
-                'I\'t still only counts as one!',
-                'Certainty of death, small chance of success- what are we waiting for?',
-                'A wizard is never late, Frodo Baggins. Nor is he early. He arrives precisely when he means to',
-                'You could have picked a better spot',
-                'What about second breakfast?',
-                'YOU SHALL NOT PASS!'
-            ],
-            'guia': [
-                'Freeze? I\'m a robot. I\'m not a refrigerator. ',
-                'Life? Don\'t talk to me about life! ',
-                'Incredible... it\'s even worse than I thought it would be.',
-                'Not that anyone cares what I say, but the restaurant is at the *other* end of the Universe.',
-                'Here I am, brain the size of a planet, and they ask me to take you to the bridge. Call that job satisfaction, \'cause I don\'t. ',
-            ],
-            'hora': [
-                'look at the top-right corner of your screen!',
-                'ADVENTURE TIME'
-            ],
-            'boanoite': [
-                'carneiros elétricos vou contar, doces sonhos vão se zarcar, como odeio a noite'.decode('utf-8')
-            ],
-            'starwars': [
-                'When 900 years old, you reach... Look as good, you will not',
-                'Come to the bot side!',
-                'IT\'S A TRAP!'
-            ],
-            'alemanha': [
-                'E fugiram pra Alemanha...',
-                'O Ayrton ja voltou de la?',
-                'Vamos?',
-                'Todo dia um 7x1 diferente...'
-            ],
-            'got': [
-                'You know nothing, Jon Snow'
-            ],
-            'elingrid': [
-                "Elingrid é o melhor ship".decode('utf-8')
-            ],
-            'carlisa': [
-                "Elingrid <3".decode('utf-8')
-            ],
-            'lumateus': [
-                "Aaaa... Lá vão eles de novo pro bequinho.. ¬¬".decode('utf-8')
-            ],
-        }
-
     def bomdia(self):
         url = 'http://developers.agenciaideias.com.br/tempo/json/riodejaneiro-rj'
         response = requestJson(url)
@@ -236,12 +235,17 @@ class WebhookHandler(webapp2.RequestHandler):
 
         def reply(msg=None, img=None):
             if msg:
-                resp = urllib2.urlopen(BASE_URL + 'sendMessage',
-                                       urllib.urlencode({'chat_id': str(chat_id),
-                                                         'text': msg.encode('utf-8'),
-                                                         'disable_web_page_preview': 'true',
-                                                         'reply_to_message_id': str(message_id),
-                                                         })).read()
+                resp = urllib2.urlopen(
+                    BASE_URL + 'sendMessage',
+                    urllib.urlencode(
+                        {
+                            'chat_id': str(chat_id),
+                            'text': msg.encode('utf-8'),
+                            'disable_web_page_preview': 'true',
+                            'reply_to_message_id': str(message_id),
+                        }
+                    )
+                ).read()
             elif img:
                 resp = multipart.post_multipart(BASE_URL + 'sendPhoto', [
                     ('chat_id', str(chat_id)),
@@ -256,6 +260,7 @@ class WebhookHandler(webapp2.RequestHandler):
             logging.info('send response:')
             logging.info(resp)
 
+        # CUSTOMIZE FROM HERE
         if text.startswith('/'):
             if text == '/start':
                 reply('Bot enabled')
@@ -268,40 +273,43 @@ class WebhookHandler(webapp2.RequestHandler):
             elif text == '/gutenmorgen':
                 reply(self.gutenMorgen())
             elif text == '/ingrid':
-                reply(random.choice(self._messages.get('ingrid')))
+                reply(random.choice(MESSAGES.get('ingrid')))
             elif text == '/image':
                 reply(img=self.drawImage())
+        else:
+            text_search = {
+                'romero britto': {'img': self.romero()},
+                'Romero Britto': {'img': self.romero()},
+                'nude': {'img': self.nude()},
+                'sex': {'msg': random.choice(MESSAGES.get('sex'))},
+                'elingrid': {'msg': random.choice(MESSAGES.get('elingrid'))},
+                'Elingrid': {'msg': random.choice(MESSAGES.get('elingrid'))},
+                'carlisa': {'msg': random.choice(MESSAGES.get('carlisa'))},
+                'Carlisa': {'msg': random.choice(MESSAGES.get('carlisa'))},
+                'lumateus': {'msg': random.choice(MESSAGES.get('lumateus'))},
+                'Lumateus': {'msg': random.choice(MESSAGES.get('lumateus'))},
+                'lotr': {'msg': random.choice(MESSAGES.get('lotr'))},
+                'LotR': {'msg': random.choice(MESSAGES.get('lotr'))},
+                'Gandalf': {'msg': random.choice(MESSAGES.get('lotr'))},
+                'Gimili': {'msg': random.choice(MESSAGES.get('lotr'))},
+                'alemanha': {'msg': random.choice(MESSAGES.get('alemanha'))},
+                'Alemanha': {'msg': random.choice(MESSAGES.get('alemanha'))},
+                'starwars': {'msg': random.choice(MESSAGES.get('starwars'))},
+                'SW': {'msg': random.choice(MESSAGES.get('starwars'))},
+                'Star Wars': {'msg': random.choice(MESSAGES.get('starwars'))},
+                'boa noite': {'msg': random.choice(MESSAGES.get('boanoite'))},
+                'who are you': {'msg': 'https://www.youtube.com/watch?v=Qh8SsaCWY-s'},
+                'guia': {'msg': random.choice(MESSAGES.get('guia'))},
+                'Guia': {'msg': random.choice(MESSAGES.get('guia'))},
+                'what time': {'msg': random.choice(MESSAGES.get('hora'))},
+                'GoT': {'msg': random.choice(MESSAGES.get('got'))},
+                'Game of Thrones': {'msg': random.choice(MESSAGES.get('got'))},
+                'game of thrones': {'msg': random.choice(MESSAGES.get('got'))},
+            }
 
-        # CUSTOMIZE FROM HERE
-        elif 'romero britto' in text or 'Romero Britto' in text:
-            reply(img=self.romero())
-        elif 'sex' in text:
-            reply(random.choice(self._messages.get('sex')))
-        elif 'nude' in text:
-            reply(img=self.nude())
-        elif 'elingrid' in text or 'Elingrid' in text:
-            reply(random.choice(self._messages.get('elingrid')))
-        elif 'carlisa' in text or 'Carlisa' in text:
-            reply(random.choice(self._messages.get('carlisa')))
-        elif 'lumateus' in text or 'Lumateus' in text:
-            reply(random.choice(self._messages.get('lumateus')))
-        elif 'lotr' in text or 'LotR' in text or 'Gandalf' in text:
-            reply(random.choice(self._messages.get('lotr')))
-        elif 'alemanha' in text or 'Alemanha' in text:
-            reply(random.choice(self._messages.get('alemanha')))
-        elif 'star wars' in text or 'Star Wars' in text or 'SW' in text:
-            reply(random.choice(self._messages.get('starwars')))
-        elif 'boa noite' in text:
-            reply(random.choice(self._messages.get('boanoite')))
-        elif 'who are you' in text:
-            reply('https://www.youtube.com/watch?v=Qh8SsaCWY-s')
-        elif 'guia' in text or 'Guia' in text:
-            reply(random.choice(self._messages.get('guia')))
-        elif 'what time' in text:
-            reply(random.choice(self._messages.get('hora')))
-        elif 'GoT' in text or 'Game of Thrones' in text or 'game of thrones' in text:
-            reply(random.choice(self._messages.get('got')))
-
+            for key, value in text_search.iteritems():
+                if key in text:
+                    reply(msg=value.get('msg'), img=value.get('img'))
 
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),
