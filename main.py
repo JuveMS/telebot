@@ -132,9 +132,9 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply('Bot disabled')
                 setEnabled(chat_id, False)
             elif text == '/bomdia':
-                reply(bot.bomdia())
+                reply(msg=bot.bomdia())
             elif text == '/gutenmorgen':
-                reply(bot.gutenMorgen())
+                reply(msg=bot.gutenMorgen())
             elif text == '/image':
                 reply(img=bot.drawImage())
             elif text == '/ingrid':

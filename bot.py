@@ -90,7 +90,7 @@ def bomdia():
             temperatura)
     else:
         msg += 'Hoje está agradável: {} graus'.format(temperatura)
-        return msg.decode('utf-8')
+    return msg.decode('utf-8')
 
 
 def gutenMorgen():
