@@ -173,12 +173,12 @@ class WebhookHandler(webapp2.RequestHandler):
             'Todo dia um 7x1 diferente...'
         ]
         return random.choice(response)
- 
+
     def starwars(self):
         response = [
             'When 900 years old, you reach... Look as good, you will not',
-            'Come to the bot side!',          
-            'IT\'S A TRAP!'        
+            'Come to the bot side!',
+            'IT\'S A TRAP!'
         ]
         return random.choice(response)
 
@@ -196,7 +196,7 @@ class WebhookHandler(webapp2.RequestHandler):
 
     def carlisa(self):
         return "Elingrid <3".decode('utf-8')
-        
+
     def lumateus(self):
         return "Aaaa... Lá vão eles de novo pro bequinho.. ¬¬".decode('utf-8')
 
@@ -270,8 +270,6 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply(self.ingrid())
             elif text == '/image':
                 reply(img=self.image())
-            else:
-                reply('What command?')
 
         # CUSTOMIZE FROM HERE
         elif 'nude' in text:
@@ -315,8 +313,6 @@ class WebhookHandler(webapp2.RequestHandler):
         elif 'GoT' in text or 'Game of Thrones' in text or 'game of thrones' in text:
             response = 'You know nothing, Jon Snow'
             reply(response)
-        elif '/safadao' in text:
-            reply(img = https://media.giphy.com/media/xTka03ETU8TqL2s0eY/giphy.gif)
 
 
 app = webapp2.WSGIApplication([
