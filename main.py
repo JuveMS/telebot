@@ -315,6 +315,8 @@ class WebhookHandler(webapp2.RequestHandler):
         elif 'GoT' in text or 'Game of Thrones' in text or 'game of thrones' in text:
             response = 'You know nothing, Jon Snow'
             reply(response)
+        elif '/safadao' in text:
+            reply(img = https://media.giphy.com/media/xTka03ETU8TqL2s0eY/giphy.gif)
 
 
 app = webapp2.WSGIApplication([
