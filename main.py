@@ -208,6 +208,14 @@ class WebhookHandler(webapp2.RequestHandler):
         response = req.read()
         req.close()
         return response
+    
+    def romero(self):
+        response = [
+            'http://ak-hdl.buzzfed.com/static/2015-10/30/14/enhanced/webdr13/enhanced-15699-1446228181-1.jpg',
+            'http://ak-hdl.buzzfed.com/static/2015-10/30/13/enhanced/webdr14/enhanced-9662-1446226945-1.png',
+            'http://ak-hdl.buzzfed.com/static/2015-10/30/14/enhanced/webdr15/enhanced-30348-1446228422-1.png'
+        ]
+        return random.choice(response)
 
     def post(self):
         urlfetch.set_default_fetch_deadline(60)
@@ -270,6 +278,8 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply(self.ingrid())
             elif text == '/image':
                 reply(img=self.image())
+            elif text == '/romerobritto':
+                reply(img=self.romero())
 
         # CUSTOMIZE FROM HERE
         elif 'nude' in text:
