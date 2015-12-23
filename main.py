@@ -196,6 +196,9 @@ class WebhookHandler(webapp2.RequestHandler):
 
     def carlisa(self):
         return "Elingrid <3".decode('utf-8')
+        
+    def lumateus(self):
+        return "Aaaa... Lá vão eles de novo pro bequinho.. ¬¬".decode('utf-8')
 
     def nude(self):
         nude_url = 'http://www.naosalvo.com.br/wp-content/uploads/2015/03/nudesmanda'
@@ -277,6 +280,8 @@ class WebhookHandler(webapp2.RequestHandler):
             reply(self.elingrid())
         elif 'carlisa' in text or 'Carlisa' in text:
             reply(self.carlisa())
+        elif 'lumateus' in text or 'Lumateus' in text:
+            reply(self.lumateus())
         elif 'lotr' in text or 'LotR' in text or 'Gandalf' in text:
             reply(self.lotr())
         elif 'alemanha' in text or 'Alemanha' in text:
