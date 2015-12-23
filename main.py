@@ -208,14 +208,20 @@ class WebhookHandler(webapp2.RequestHandler):
         response = req.read()
         req.close()
         return response
-    
+
     def romero(self):
         response = [
             'http://ak-hdl.buzzfed.com/static/2015-10/30/14/enhanced/webdr13/enhanced-15699-1446228181-1.jpg',
-            'http://ak-hdl.buzzfed.com/static/2015-10/30/13/enhanced/webdr14/enhanced-9662-1446226945-1.png',
-            'http://ak-hdl.buzzfed.com/static/2015-10/30/14/enhanced/webdr15/enhanced-30348-1446228422-1.png'
+            'http://cdn.playbuzz.com/cdn/01abb44f-88dc-4eab-8c10-ad2ac3a4f962/a9246bbb-6c58-4803-a361-c23a290e09d5.jpg',
+            'http://e-c5.sttc.net.br/uploads/RTEmagicC_12272697_10208101927404572_1485185519_n_01.jpg.jpg',
+            'http://imguol.com/c/entretenimento/2015/03/23/montagem-feita-por-fa-em-que-ines-brasil-aparece-como-pintura-de-romero-britto-1427142882485_640x640.jpg'
         ]
-        return random.choice(response)
+        url = random.choice(response)
+
+        req = urllib2.urlopen(urllib2.Request(url, headers={'Content-Type': 'application/json'}))
+        response = req.read()
+        req.close()
+        return response
 
     def post(self):
         urlfetch.set_default_fetch_deadline(60)
