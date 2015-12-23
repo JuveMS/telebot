@@ -239,7 +239,7 @@ class WebhookHandler(webapp2.RequestHandler):
                 'SW': resposta('starwars'),
                 'Star Wars': resposta('starwars'),
                 'boa noite': resposta('boanoite'),
-                'who are you': 'https://www.youtube.com/watch?v=Qh8SsaCWY-s'},
+                'who are you': 'https://www.youtube.com/watch?v=Qh8SsaCWY-s',
                 'guia': resposta('guia'),
                 'Guia': resposta('guia'),
                 'what time': resposta('hora'),
