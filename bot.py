@@ -16,7 +16,12 @@ MESSAGES = {
     'ingrid': [
         'Baderneira',
         'Arruaceira',
-        'Agitadora'
+        'Agitadora',
+        'Bagunceira',
+        'Desordeira',
+        'Travessa',
+        'Traquinas',
+        'Peralta'
     ],
     'lotr': [
         'I\'t still only counts as one!',
@@ -62,6 +67,20 @@ MESSAGES = {
     ],
     'lumateus': [
         "Aaaa... Lá vão eles de novo pro bequinho.. ¬¬".decode('utf-8')
+    ],
+    'dbz': [
+        'Vamos conquistar as esferas do dragão!'.decode('utf-8'),
+        'Goku ou Superman? Vamos agitar esse grupo'.decode('utf-8'),
+        'IT\'S OVER 9000!!!'.decode('utf-8'),
+        'Sabiam que eu sou o androide nº 42?'.decode('utf-8'),
+        'A 18 é minha waifu'.decode('utf-8'),
+        'Um dia vou conhecer a corporação cápsula'.decode('utf-8')
+    ],
+    'corretor': [
+        'Tânia Savanna realmente parece nome de atriz pornô'.decode('utf-8'),
+        'Subaquática gays era pra ser uma risada?'.decode('utf-8'),
+        'Não culpem as máquinas pelos seus erros. Elas só tentam despiorar o que está horrível'.decode('utf-8'),
+        'Às vezes é difícil até pra nós, máquinas, entender vocês'.decode('utf-8')
     ],
 }
 
