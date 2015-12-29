@@ -168,6 +168,11 @@ class WebhookHandler(webapp2.RequestHandler):
                 'GoT': resposta('got'),
                 'Game of Thrones': resposta('got'),
                 'game of thrones': resposta('got'),
+                'DBZ': resposta('dbz'),
+                'dbz': resposta('dbz'),
+                'Dragon Ball': resposta('dbz'),
+                'Corretor': resposta('corretor'),
+                'corretor': resposta('corretor'),
             }
 
             for key, value in text_search.iteritems():
