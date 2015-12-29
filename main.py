@@ -154,7 +154,7 @@ class WebhookHandler(webapp2.RequestHandler):
                 'lotr': resposta('lotr'),
                 'LotR': resposta('lotr'),
                 'Gandalf': resposta('lotr'),
-                'Gimili': resposta('lotr'),
+                'Gimli': resposta('lotr'),
                 'alemanha': resposta('alemanha'),
                 'Alemanha': resposta('alemanha'),
                 'starwars': resposta('starwars'),
@@ -168,6 +168,11 @@ class WebhookHandler(webapp2.RequestHandler):
                 'GoT': resposta('got'),
                 'Game of Thrones': resposta('got'),
                 'game of thrones': resposta('got'),
+                'DBZ': resposta('dbz'),
+                'dbz': resposta('dbz'),
+                'dragon ball': resposta('dbz'),
+                'corretor': resposta('corretor'),
+                'Corretor': resposta('corretor'),
             }
 
             for key, value in text_search.iteritems():
